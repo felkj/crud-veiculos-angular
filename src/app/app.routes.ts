@@ -18,7 +18,7 @@ export const routes: Routes = [
       {
         path: 'cadastro',
         component: CadastroComponent,
-        data: { roles: ['ADMIN'] },
+        data: { roles: ['ADMIN', 'USER'] },
       },
       {
         path: 'listagem',
@@ -28,7 +28,7 @@ export const routes: Routes = [
       {
         path: 'edicao/:id',
         component: EditarComponent,
-        data: { roles: ['ADMIN'] }
+        data: { roles: ['ADMIN' , 'USER'] }
       }
     ],
   },

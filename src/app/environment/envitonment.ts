@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'crud-veiculos-java-production.up.railway.app',
+    apiUrl: 'https://crud-veiculos-java-production.up.railway.app',
 };

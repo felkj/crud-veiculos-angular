@@ -5,7 +5,7 @@
   <p class="text-center text-muted mb-5">Preencha o formulário abaixo para cadastrar um novo veículo.</p>
 
   <!-- Indicador de carregamento -->
-  <div *ngIf="carregando" class="d-flex justify-content-center my-5">
+  <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Carregando...</span>
     </div>
@@ -13,69 +13,110 @@
   </div>
 
   <!-- Mensagem de sucesso -->
-  <div *ngIf="sucessoMsg" class="alert alert-success text-center my-4" role="alert">
-    {{ sucessoMsg }}
-    <button type="button" class="btn-close" (click)="sucessoMsg = null" aria-label="Fechar"></button>
+  <div *ngIf="successMessage" class="alert alert-success text-center my-4" role="alert">
+    {{ successMessage }}
+    <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Fechar"></button>
   </div>
 
   <!-- Mensagem de erro -->
-  <div *ngIf="errorMsg" class="alert alert-danger text-center my-4" role="alert">
-    {{ errorMsg }}
-    <button type="button" class="btn-close" (click)="errorMsg = null" aria-label="Fechar"></button>
+  <div *ngIf="errorMessage" class="alert alert-danger text-center my-4" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Fechar"></button>
   </div>
 
   <!-- Formulário de Cadastro (visível apenas se for ADMIN e sem erro crítico) -->
   <!-- O formulário só aparece se o usuário for ADMIN -->
-  <div *ngIf="isAdmin() && !carregando && !errorMsg" class="card shadow-lg p-4 p-md-5 mx-auto" style="max-width: 600px; border-radius: 15px;">
-    <div class="card-body">
-      <form #form="ngForm" (ngSubmit)="cadastrarVeiculo(form)">
-        
-        <div class="mb-3">
-          <label for="marca" class="form-label fw-semibold">Marca</label>
-          <input type="text" id="marca" name="marca" [(ngModel)]="newVeiculo.marca"
-                 class="form-control" placeholder="Marca do veículo" required>
+  <div *ngIf="isAdmin() && !isLoading && !errorMessage" class="row justify-content-center w-100"> <!-- ADICIONADO: row para o sistema de grid, w-100 para ocupar a largura total -->
+    <!-- Definindo o tamanho da coluna para diferentes tamanhos de tela -->
+    <div class="col-12 col-sm-10 col-md-8 col-lg-8"> <!-- col-12 para mobile, col-sm-10, col-md-8, col-lg-8 para telas maiores -->
+      <div class="card shadow-lg p-4 p-md-5 mx-auto" style="border-radius: 15px;"> <!-- max-width: 600px; pode ser removido, pois as colunas já controlam a largura -->
+        <div class="card-body">
+          <!-- NOVO: Adicione #cadastroForm="ngForm" para referenciar o formulário -->
+          <form (ngSubmit)="cadastrarVeiculo(cadastroForm)" #cadastroForm="ngForm"> 
+            
+            <div class="mb-3">
+              <label for="marca" class="form-label fw-semibold">Marca</label>
+              <input type="text" id="marca" name="marca" [(ngModel)]="newVeiculo.marca"
+                     class="form-control" 
+                     placeholder="Marca do veículo" 
+                     required 
+                     #marca="ngModel" <!-- NOVO: Referência para o controle do ngModel -->
+                     [class.is-invalid]="marca.invalid && (marca.dirty || marca.touched)"> <!-- NOVO: Classe de validação -->
+              <div class="invalid-feedback" *ngIf="marca.invalid && (marca.dirty || marca.touched)"> <!-- NOVO: Mensagem de validação -->
+                A marca é obrigatória.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="modelo" class="form-label fw-semibold">Modelo</label>
+              <input type="text" id="modelo" name="modelo" [(ngModel)]="newVeiculo.modelo"
+                     class="form-control" 
+                     placeholder="Modelo do veículo" 
+                     required
+                     #modelo="ngModel"
+                     [class.is-invalid]="modelo.invalid && (modelo.dirty || modelo.touched)">
+              <div class="invalid-feedback" *ngIf="modelo.invalid && (modelo.dirty || modelo.touched)">
+                O modelo é obrigatório.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="ano" class="form-label fw-semibold">Ano</label>
+              <input type="number" id="ano" name="ano" [(ngModel)]="newVeiculo.ano"
+                     class="form-control" 
+                     placeholder="Ano de fabricação" 
+                     required
+                     #ano="ngModel"
+                     [class.is-invalid]="ano.invalid && (ano.dirty || ano.touched)">
+              <div class="invalid-feedback" *ngIf="ano.invalid && (ano.dirty || ano.touched)">
+                O ano é obrigatório e deve ser um número.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="preco" class="form-label fw-semibold">Preço (R$)</label>
+              <input type="number" id="preco" name="preco" [(ngModel)]="newVeiculo.preco"
+                     class="form-control" 
+                     placeholder="Preço do veículo" 
+                     required
+                     #preco="ngModel"
+                     [class.is-invalid]="preco.invalid && (preco.dirty || preco.touched)">
+              <div class="invalid-feedback" *ngIf="preco.invalid && (preco.dirty || preco.touched)">
+                O preço é obrigatório e deve ser um número.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="url_image" class="form-label fw-semibold">URL da Imagem</label>
+              <input type="url" id="url_image" name="url_image" [(ngModel)]="newVeiculo.url_image"
+                     class="form-control" 
+                     placeholder="URL da imagem do veículo" 
+                     required
+                     #urlImage="ngModel"
+                     [class.is-invalid]="urlImage.invalid && (urlImage.dirty || urlImage.touched)">
+              <div class="invalid-feedback" *ngIf="urlImage.invalid && (urlImage.dirty || urlImage.touched)">
+                A URL da imagem é obrigatória e deve ser uma URL válida.
+              </div>
+            </div>
+
+            <div class="mb-4 form-check">
+              <input type="checkbox" id="vendido" name="vendido" [(ngModel)]="newVeiculo.vendido"
+                     class="form-check-input">
+              <label class="form-check-label fw-semibold" for="vendido">Vendido</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="isLoading || cadastroForm.invalid"> <!-- NOVO: Desativa se o formulário for inválido -->
+              <i class="bi bi-plus-circle"></i> Cadastrar Veículo
+            </button>
+
+          </form>
         </div>
-
-        <div class="mb-3">
-          <label for="modelo" class="form-label fw-semibold">Modelo</label>
-          <input type="text" id="modelo" name="modelo" [(ngModel)]="newVeiculo.modelo"
-                 class="form-control" placeholder="Modelo do veículo" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="ano" class="form-label fw-semibold">Ano</label>
-          <input type="number" id="ano" name="ano" [(ngModel)]="newVeiculo.ano"
-                 class="form-control" placeholder="Ano de fabricação" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="preco" class="form-label fw-semibold">Preço (R$)</label>
-          <input type="number" id="preco" name="preco" [(ngModel)]="newVeiculo.preco"
-                 class="form-control" placeholder="Preço do veículo" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="url_image" class="form-label fw-semibold">URL da Imagem</label>
-          <input type="url" id="url_image" name="url_image" [(ngModel)]="newVeiculo.url_image"
-                 class="form-control" placeholder="URL da imagem do veículo" required>
-        </div>
-
-        <div class="mb-4 form-check">
-          <input type="checkbox" id="vendido" name="vendido" [(ngModel)]="newVeiculo.vendido"
-                 class="form-check-input">
-          <label class="form-check-label fw-semibold" for="vendido">Vendido</label>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="carregando">
-          <i class="bi bi-plus-circle"></i> Cadastrar Veículo
-        </button>
-
-      </form>
+      </div>
     </div>
   </div>
 
   <!-- Mensagem de permissão negada (se não for ADMIN) -->
-  <div *ngIf="!isAdmin() && !carregando && !errorMsg" class="alert alert-warning text-center my-5" role="alert">
+  <div *ngIf="!isAdmin() && !isLoading && !errorMessage" class="alert alert-warning text-center my-5" role="alert">
     Você não tem permissão para cadastrar veículos. Por favor, faça login como administrador.
     <br>
     <button type="button" class="btn btn-sm btn-info mt-3" (click)="goToLogin()">Ir para Login</button>

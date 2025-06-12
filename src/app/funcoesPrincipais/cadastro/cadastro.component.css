@@ -1,0 +1,58 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    border-radius: 10px;
+}
+.header{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+input{
+    margin-bottom: 10px;
+    width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+button{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+select{
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.form-check-input{
+    width: 20px;
+    margin-right: 10px;
+}
+.btn-close{
+    width: 20px;
+    background-color: transparent
+}
+.alert-danger{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

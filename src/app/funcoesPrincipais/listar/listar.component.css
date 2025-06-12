@@ -1,0 +1,98 @@
+.spinner-border {
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Sombra azul para o spinner */
+}
+
+.card {
+  border-radius: 10px; /* Borda mais arredondada para os cards */
+  overflow: hidden; /* Garante que a imagem siga o border-radius */
+}
+
+.vehicle-card-img {
+  width: 100%;
+  height: 200px; /* Altura fixa para as imagens dos cards */
+  object-fit: cover; /* Garante que a imagem cubra a área sem distorção */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-title {
+  font-size: 1.25rem; /* Tamanho do título do card */
+  font-weight: bold;
+  color: var(--bs-primary);
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.card-footer {
+  background-color: #f8f9fa; /* Fundo leve para o footer do card */
+  border-top: 1px solid #e9ecef; /* Borda sutil no topo do footer */
+}
+.container {
+  margin: auto; /* Centraliza o container na página */
+  padding: 20px; /* Espaçamento interno */
+  min-height: 80vh;
+}
+.preco{
+  font-size: 25px;
+}
+.confirmation-dialog-overlay {
+  position: fixed; /* Fixa na tela */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* <<-- CORREÇÃO: Aumentado o z-index para garantir que fique no topo */
+  animation: fadeIn 0.3s ease-out; /* Animação suave */
+}
+
+.confirmation-dialog-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
+  max-width: 450px;
+  width: 90%; /* Ajuste para telas menores */
+  text-align: center;
+  animation: slideIn 0.3s ease-out; /* Animação suave */
+}
+
+.confirmation-dialog-box .card-body {
+  padding: 0; /* Remove padding extra do card-body */
+}
+
+.confirmation-dialog-box h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #343a40;
+}
+
+.confirmation-dialog-box p {
+  font-size: 1.1rem;
+  color: #6c757d;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-50px) scale(0.9); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Ajustes responsivos */
+@media (max-width: 767.98px) {
+  .confirmation-dialog-box {
+    max-width: 95%;
+    padding: 20px;
+  }
+}

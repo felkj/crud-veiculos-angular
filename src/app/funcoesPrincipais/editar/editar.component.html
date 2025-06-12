@@ -1,0 +1,103 @@
+<app-header></app-header>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Editar Veículo</h2>
+
+  <!-- Indicador de carregamento -->
+  <div *ngIf="carregando" class="d-flex justify-content-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+    <p class="ms-2">Carregando dados do veículo...</p>
+  </div>
+
+  <!-- Mensagem de erro -->
+  <div *ngIf="errorMsg" class="alert alert-danger text-center my-4" role="alert">
+    {{ errorMsg }}
+    <button type="button" class="btn-close" (click)="errorMsg = null" aria-label="Fechar"></button>
+  </div>
+
+  <!-- Conteúdo principal: Layout de duas colunas (visível apenas se o veículo estiver carregado e sem erro) -->
+  <div *ngIf="!carregando && !errorMsg && veiculo" class="row g-4 justify-content-center">
+
+    <!-- Coluna da Esquerda: Dados Atuais do Veículo (ReadOnly) -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm text-center">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Dados Atuais do Veículo</h5>
+        </div>
+        <div class="card-body">
+          <img [src]="veiculo.url_image || 'assets/placeholder-veiculo.png'" class="img-fluid rounded mb-3 vehicle-edit-img" [alt]="veiculo.modelo">
+          <h4 class="card-title">{{ veiculo.modelo }} ({{ veiculo.ano }})</h4>
+          <p class="card-text mb-1"><strong>Marca:</strong> {{ veiculo.marca }}</p>
+          <p class="card-text mb-1"><strong>Preço:</strong> R$<strong>{{ veiculo.preco | number:'1.0-0' }}</strong></p>
+          <p class="card-text mb-1">
+            <strong>Status:</strong> 
+            <span [class]="veiculo.vendido ? 'text-danger fw-bold' : 'text-success fw-bold'">
+              {{ veiculo.vendido ? 'Vendido' : 'Em estoque' }}
+            </span>
+          </p>
+        </div>
+        <div class="card-footer text-muted">
+            ID: {{ veiculo.id }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Coluna da Direita: Formulário de Edição -->
+    <div class="col-md-6">
+      <div class="card shadow-lg p-4 p-md-5 h-100" style="border-radius: 15px;">
+        <div class="card-body">
+          <h4 class="text-center mb-4">Formulário de Edição</h4>
+          <form (ngSubmit)="salvarAlteracoes()">
+            <div class="mb-3">
+              <label for="marca" class="form-label fw-semibold">Marca</label>
+              <input type="text" id="marca" name="marca" [(ngModel)]="veiculo.marca"
+                     class="form-control" placeholder="Marca do veículo" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="modelo" class="form-label fw-semibold">Modelo</label>
+              <input type="text" id="modelo" name="modelo" [(ngModel)]="veiculo.modelo"
+                     class="form-control" placeholder="Modelo do veículo" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="ano" class="form-label fw-semibold">Ano</label>
+              <input type="number" id="ano" name="ano" [(ngModel)]="veiculo.ano"
+                     class="form-control" placeholder="Ano de fabricação" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="preco" class="form-label fw-semibold">Preço (R$)</label>
+              <input type="number" id="preco" name="preco" [(ngModel)]="veiculo.preco"
+                     class="form-control" placeholder="Preço do veículo" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="imageUrl" class="form-label fw-semibold">URL da Imagem</label>
+              <input type="url" id="imageUrl" name="imageUrl" [(ngModel)]="veiculo.url_image"
+                     class="form-control" placeholder="URL da imagem do veículo">
+            </div>
+
+            <div class="mb-4 form-check">
+              <input type="checkbox" id="vendido" name="vendido" [(ngModel)]="veiculo.vendido"
+                     class="form-check-input">
+              <label class="form-check-label fw-semibold" for="vendido">Vendido</label>
+            </div>
+
+            <!-- Botão Salvar (visível apenas para ADMIN) -->
+            <button type="submit" class="btn btn-success btn-lg w-100 mb-2" *ngIf="isAdmin()">
+              <i class="bi bi-save"></i> Salvar Alterações
+            </button>
+
+            <!-- Botão Voltar -->
+            <button type="button" class="btn btn-secondary btn-lg w-100" (click)="voltarParaListagem()">
+              Voltar para a Listagem
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

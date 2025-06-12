@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Listagem de Veículos</h2>
+
+  <div *ngIf="carregando" class="d-flex justify-content-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+    <p class="ms-2">Carregando veículos...</p>
+  </div>
+
+  <div *ngIf="errorMsg" class="alert alert-danger text-center my-4" role="alert">
+    {{ errorMsg }}
+    <button type="button" class="btn-close" (click)="errorMsg = null" aria-label="Fechar"></button>
+  </div>
+
+  <div *ngIf="!carregando && !errorMsg && veiculos.length === 0" class="alert alert-info text-center my-4" role="alert">
+    Nenhum veículo cadastrado.
+    <a *ngIf="isAdmin()" routerLink="/cadastro" class="btn btn-sm btn-info ms-3">Cadastrar agora</a>
+  </div>
+
+  <div *ngIf="!carregando && !errorMsg && veiculos.length > 0" class="row g-4">
+    <div class="col-md-6 col-lg-4" *ngFor="let veiculo of veiculos">
+      <div class="card h-100 shadow-sm">
+        <img class="vehicle-card-img " *ngIf="veiculo.url_image" [src]="veiculo.url_image" />
+        <div class="card-body">  
+        <strong>
+            <p class="card-text mb-1">  
+            <span [class]="veiculo.vendido ? 'text-danger' : 'text-success'">
+              {{ veiculo.vendido ? 'Vendido' : 'Em estoque' }}
+            </span>
+            </p>
+        </strong> 
+          <h5 class="card-title">{{ veiculo.marca }}</h5>
+          <p class="card-text mb-1"><strong>{{ veiculo.modelo }}</strong> ({{ veiculo.ano }})</p>
+          <p class="card-text mb-1 preco"><strong>R${{ veiculo.preco | number:'1.0-0' }}</strong></p>
+          </div>
+
+        <div class="card-footer text-end">
+          <a *ngIf="isAdmin()" class="btn btn-outline-primary btn-sm me-2" [routerLink]="['/edicao', veiculo.id]">
+            <i class="bi bi-pencil">Editar</i> 
+          </a>
+          <button *ngIf="isAdmin()" class="btn btn-outline-danger btn-sm" (click)="openConfirmDeleteDialog(veiculo.id)">
+            <i class="bi bi-trash"></i> Excluir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="confirmation-dialog-overlay" *ngIf="showConfirmDialog">
+  <div class="confirmation-dialog-box card shadow-lg">
+    <div class="card-body text-center">
+      <i class="bi bi-exclamation-triangle-fill text-warning display-4 mb-3"></i>
+      <h5 class="card-title mb-3">Confirmar Exclusão</h5>
+      <p class="card-text mb-4">Tem certeza que deseja excluir este veículo (ID: <strong>{{ veiculoToDeleteId }}</strong>)?</p>
+      <button class="btn btn-danger me-2" (click)="confirmDelete()">Sim, Excluir</button>
+      <button class="btn btn-secondary" (click)="cancelDelete()">Cancelar</button>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

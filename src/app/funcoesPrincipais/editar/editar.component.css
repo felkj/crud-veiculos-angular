@@ -1,0 +1,152 @@
+/* src/app/edit/edit.component.css */
+
+/* Estilo geral para o container principal */
+.container {
+  max-width: 1200px; /* Limita a largura máxima para melhor visualização em telas grandes */
+  margin-top: 30px; /* Espaçamento superior */
+  margin-bottom: 30px; /* Espaçamento inferior */
+}
+
+/* Estilo para os títulos */
+h2 {
+  color: #343a40; /* Cor escura para o título */
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+/* Estilo para os cards (dados atuais e formulário) */
+.card {
+  border-radius: 12px; /* Borda mais arredondada */
+  border: 1px solid rgba(0, 0, 0, 0.125); /* Borda sutil */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-3px); /* Leve efeito de elevação no hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra um pouco mais forte no hover */
+}
+
+/* Estilo para o cabeçalho dos cards (especialmente "Dados Atuais do Veículo") */
+.card-header {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 15px 20px;
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+
+/* Estilo da imagem do veículo na coluna de dados atuais */
+.vehicle-edit-img {
+  max-width: 100%;
+  height: 250px; /* Altura fixa para a imagem */
+  object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
+  border-radius: 8px; /* Borda arredondada para a imagem */
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para a imagem */
+}
+
+/* Estilo para o corpo dos cards */
+.card-body {
+  padding: 30px;
+}
+
+.card-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #007bff; /* Cor primária do Bootstrap */
+  margin-bottom: 1.25rem;
+}
+
+.card-text strong {
+  color: #495057; /* Cor para os labels em negrito */
+}
+
+/* Estilo para os inputs do formulário */
+.form-control {
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.form-label {
+  color: #495057;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Estilo para o checkbox de "Vendido" */
+.form-check-input {
+  border-radius: 5px; /* Levemente arredondado */
+}
+
+.form-check-label {
+  color: #495057;
+  font-size: 1rem;
+}
+
+/* Estilo para os botões */
+.btn-lg {
+  border-radius: 8px;
+  font-weight: bold;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+/* Estilo para os ícones dentro dos botões */
+.btn .bi {
+  margin-right: 8px;
+  font-size: 1rem; /* Ajuste o tamanho do ícone se necessário */
+}
+
+/* Estilo para o spinner de carregamento */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3em;
+}
+
+/* Ajustes responsivos para telas menores */
+@media (max-width: 767.98px) {
+  .card-body {
+    padding: 20px;
+  }
+  .card-title {
+    font-size: 1.5rem;
+  }
+  .vehicle-edit-img {
+    height: 200px;
+  }
+  .btn-lg {
+    padding: 10px 15px;
+    font-size: 1rem;
+  }
+}

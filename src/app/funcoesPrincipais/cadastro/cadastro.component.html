@@ -1,164 +1,86 @@
 <app-header></app-header>
 <!-- src/app/cadastro/cadastro.component.html -->
-<div class="container mt-4">
-
-  <h2 class="text-center mb-4">Cadastro de Veículos</h2>
-
-  <p class="text-center text-muted mb-5">Preencha o formulário abaixo para cadastrar um novo veículo.</p>
-
-
-
-  <!-- Indicador de carregamento -->
-
-  <div *ngIf="carregando" class="d-flex justify-content-center my-5">
-
-    <div class="spinner-border text-primary" role="status">
-
-      <span class="visually-hidden">Carregando...</span>
-
-    </div>
-
-    <p class="ms-2">Cadastrando veículo...</p>
-
-  </div>
-
-
-
-  <!-- Mensagem de sucesso -->
-
-  <div *ngIf="sucessoMsg" class="alert alert-success text-center my-4" role="alert">
-
-    {{ sucessoMsg }}
-
-    <button type="button" class="btn-close" (click)="sucessoMsg = null" aria-label="Fechar"></button>
-
-  </div>
-
-
-
-  <!-- Mensagem de erro -->
-
-  <div *ngIf="errorMsg" class="alert alert-danger text-center my-4" role="alert">
-
-    {{ errorMsg }}
-
-    <button type="button" class="btn-close" (click)="errorMsg = null" aria-label="Fechar"></button>
-
-  </div>
-
-
-
-  <!-- Formulário de Cadastro (visível apenas se for ADMIN e sem erro crítico) -->
-
-  <!-- O formulário só aparece se o usuário for ADMIN -->
-
-  <div *ngIf="isAdmin() && !carregando && !errorMsg" class="card shadow-lg p-4 p-md-5 mx-auto" style="max-width: 600px; border-radius: 15px;">
-
-    <div class="card-body">
-
-      <form #form="ngForm" (ngSubmit)="cadastrarVeiculo(form)">
-
-        
-
-        <div class="mb-3">
-
-          <label for="marca" class="form-label fw-semibold">Marca</label>
-
-          <input type="text" id="marca" name="marca" [(ngModel)]="newVeiculo.marca"
-
-                 class="form-control" placeholder="Marca do veículo" required>
-
-        </div>
-
-
-
-        <div class="mb-3">
-
-          <label for="modelo" class="form-label fw-semibold">Modelo</label>
-
-          <input type="text" id="modelo" name="modelo" [(ngModel)]="newVeiculo.modelo"
-
-                 class="form-control" placeholder="Modelo do veículo" required>
-
-        </div>
-
-
-
-        <div class="mb-3">
-
-          <label for="ano" class="form-label fw-semibold">Ano</label>
-
-          <input type="number" id="ano" name="ano" [(ngModel)]="newVeiculo.ano"
-
-                 class="form-control" placeholder="Ano de fabricação" required>
-
-        </div>
-
-
-
-        <div class="mb-3">
-
-          <label for="preco" class="form-label fw-semibold">Preço (R$)</label>
-
-          <input type="number" id="preco" name="preco" [(ngModel)]="newVeiculo.preco"
-
-                 class="form-control" placeholder="Preço do veículo" required>
-
-        </div>
-
-
-
-        <div class="mb-3">
-
-          <label for="url_image" class="form-label fw-semibold">URL da Imagem</label>
-
-          <input type="url" id="url_image" name="url_image" [(ngModel)]="newVeiculo.url_image"
-
-                 class="form-control" placeholder="URL da imagem do veículo" required>
-
-        </div>
-
-
-
-        <div class="mb-4 form-check">
-
-          <input type="checkbox" id="vendido" name="vendido" [(ngModel)]="newVeiculo.vendido"
-
-                 class="form-check-input">
-
-          <label class="form-check-label fw-semibold" for="vendido">Vendido</label>
-
-        </div>
-
-
-
-        <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="carregando">
-
-          <i class="bi bi-plus-circle"></i> Cadastrar Veículo
-
-        </button>
-
-
-
-      </form>
-
-    </div>
-
-  </div>
-
-
-
-  <!-- Mensagem de permissão negada (se não for ADMIN) -->
-
-  <div *ngIf="!isAdmin() && !carregando && !errorMsg" class="alert alert-warning text-center my-5" role="alert">
-
-    Você não tem permissão para cadastrar veículos. Por favor, faça login como administrador.
-
-    <br>
-
-    <button type="button" class="btn btn-sm btn-info mt-3" (click)="goToLogin()">Ir para Login</button>
-
-  </div>
+<div class="container mt-4 px-3">
+
+  <h2 class="text-center mb-4">Cadastro de Veículos</h2>
+
+  <p class="text-center text-muted mb-5">Preencha o formulário abaixo para cadastrar um novo veículo.</p>
+
+  <!-- Indicador de carregamento -->
+  <div *ngIf="carregando" class="d-flex justify-content-center align-items-center flex-column my-5 text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+    <p class="mt-2">Cadastrando veículo...</p>
+  </div>
+
+  <!-- Mensagem de sucesso -->
+  <div *ngIf="sucessoMsg" class="alert alert-success text-center my-4 d-flex justify-content-between align-items-center flex-wrap">
+    <span class="flex-grow-1">{{ sucessoMsg }}</span>
+    <button type="button" class="btn-close ms-auto" (click)="sucessoMsg = null" aria-label="Fechar"></button>
+  </div>
+
+  <!-- Mensagem de erro -->
+  <div *ngIf="errorMsg" class="alert alert-danger text-center my-4 d-flex justify-content-between align-items-center flex-wrap">
+    <span class="flex-grow-1">{{ errorMsg }}</span>
+    <button type="button" class="btn-close ms-auto" (click)="errorMsg = null" aria-label="Fechar"></button>
+  </div>
+
+  <!-- Formulário de Cadastro -->
+  <div *ngIf="isAdmin() && !carregando && !errorMsg" class="card shadow-lg p-3 p-sm-4 p-md-5 mx-auto w-100" style="max-width: 600px; border-radius: 15px;">
+    <div class="card-body">
+      <form #form="ngForm" (ngSubmit)="cadastrarVeiculo(form)">
+
+        <div class="mb-3">
+          <label for="marca" class="form-label fw-semibold">Marca</label>
+          <input type="text" id="marca" name="marca" [(ngModel)]="newVeiculo.marca"
+                 class="form-control" placeholder="Marca do veículo" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="modelo" class="form-label fw-semibold">Modelo</label>
+          <input type="text" id="modelo" name="modelo" [(ngModel)]="newVeiculo.modelo"
+                 class="form-control" placeholder="Modelo do veículo" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="ano" class="form-label fw-semibold">Ano</label>
+          <input type="number" id="ano" name="ano" [(ngModel)]="newVeiculo.ano"
+                 class="form-control" placeholder="Ano de fabricação" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="preco" class="form-label fw-semibold">Preço (R$)</label>
+          <input type="number" id="preco" name="preco" [(ngModel)]="newVeiculo.preco"
+                 class="form-control" placeholder="Preço do veículo" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="url_image" class="form-label fw-semibold">URL da Imagem</label>
+          <input type="url" id="url_image" name="url_image" [(ngModel)]="newVeiculo.url_image"
+                 class="form-control" placeholder="URL da imagem do veículo" required>
+        </div>
+
+        <div class="mb-4 form-check">
+          <input type="checkbox" id="vendido" name="vendido" [(ngModel)]="newVeiculo.vendido"
+                 class="form-check-input">
+          <label class="form-check-label fw-semibold" for="vendido">Vendido</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="carregando">
+          <i class="bi bi-plus-circle"></i> Cadastrar Veículo
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Mensagem de permissão negada -->
+  <div *ngIf="!isAdmin() && !carregando && !errorMsg" class="alert alert-warning text-center my-5">
+    Você não tem permissão para cadastrar veículos. Por favor, faça login como administrador.
+    <br>
+    <button type="button" class="btn btn-sm btn-info mt-3" (click)="goToLogin()">Ir para Login</button>
+  </div>
 
 </div>
 

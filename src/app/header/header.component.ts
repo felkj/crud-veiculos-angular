@@ -12,6 +12,10 @@ import { Router, RouterModule } from '@angular/router';
 export class HeaderComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
+  isAdmin(): boolean {
+    return this.authService.hasRole('ADMIN');
+  }
+
   logout(): void {
     this.authService.logout();
   }
